@@ -62,9 +62,10 @@
       background: #FDF8F2;
     }
 
-    /* Full-Bleed Scenic Editorial Chapter (No Rigid Card Borders) */
+    /* Full-Bleed Scenic Editorial Chapter */
     .scenic-chapter {
       position: relative;
+      min-height: 100vh;
       min-height: 100svh;
       width: 100%;
       overflow: hidden;
@@ -89,25 +90,26 @@
 
     /* Floating Glassmorphic Editorial Detail Pill */
     .editorial-glass {
-      background: rgba(255, 255, 255, 0.56);
+      background: rgba(255, 255, 255, 0.62);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.78);
       box-shadow: 0 12px 32px -8px rgba(38, 25, 16, 0.09);
     }
 
     .editorial-glass-dark {
-      background: rgba(18, 16, 42, 0.52);
+      background: rgba(18, 16, 42, 0.56);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.20);
+      border: 1px solid rgba(255, 255, 255, 0.22);
       box-shadow: 0 14px 36px -8px rgba(0, 0, 0, 0.35);
     }
 
     /* ===================================================================== */
-    /* KINETIC SHIMMER TEXT & STAGGERED SCROLL REVEAL                        */
+    /* KINETIC SHIMMER TEXT & SAFE PROGRESSIVE SCROLL REVEAL                 */
     /* ===================================================================== */
     .foil-text {
+      color: var(--foil-1, #8C5E2A);
       background: linear-gradient(
         115deg,
         var(--foil-1, #8C5E2A) 15%,
@@ -118,7 +120,7 @@
       background-size: 230% auto;
       -webkit-background-clip: text;
       background-clip: text;
-      color: transparent;
+      -webkit-text-fill-color: transparent;
       animation: foilShine 5s linear infinite;
     }
 
@@ -127,26 +129,26 @@
       100% { background-position: -30% center; }
     }
 
+    /* Visible by default so text NEVER gets stuck blank; animated when JS adds .js-ready */
     .reveal-item {
-      opacity: 0;
-      transform: translateY(22px) scale(0.97);
-      filter: blur(2px);
-      transition:
-        opacity 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.85s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.85s ease;
-    }
-    .reveal-item.is-visible {
       opacity: 1;
       transform: translateY(0) scale(1);
-      filter: blur(0);
+      transition:
+        opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    html.js-ready .reveal-item {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+    }
+    html.js-ready .reveal-item.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
     }
     .stagger-1 { transition-delay: 0.08s; }
-    .stagger-2 { transition-delay: 0.20s; }
-    .stagger-3 { transition-delay: 0.32s; }
-    .stagger-4 { transition-delay: 0.44s; }
-    .stagger-5 { transition-delay: 0.56s; }
-    .stagger-6 { transition-delay: 0.68s; }
+    .stagger-2 { transition-delay: 0.18s; }
+    .stagger-3 { transition-delay: 0.28s; }
+    .stagger-4 { transition-delay: 0.38s; }
 
     /* ===================================================================== */
     /* AMBIENT COUPLE MOTION, TREES, VINES & FLUTTERING BUTTERFLIES          */
@@ -271,13 +273,13 @@
   <canvas id="gold-dust-canvas" class="fixed inset-0 pointer-events-none z-40"></canvas>
 
   <!-- ===================================================================== -->
-  <!-- 5 DEDICATED HTML5 <AUDIO> ELEMENTS (Root-Level MP3 Files)             -->
+  <!-- 5 DEDICATED HTML5 <AUDIO> ELEMENTS (Root-Level MP3 Files + Autoplay)  -->
   <!-- ===================================================================== -->
-  <audio id="audio-track1" src="welcome-mata-pujan.mp3" preload="auto" loop></audio>
-  <audio id="audio-track2" src="mehndi.mp3" preload="auto" loop></audio>
-  <audio id="audio-track3" src="haldi.mp3" preload="auto" loop></audio>
-  <audio id="audio-track4" src="sangeet.mp3" preload="auto" loop></audio>
-  <audio id="audio-track5" src="wedding-finale.mp3" preload="auto" loop></audio>
+  <audio id="audio-track1" src="welcome-mata-pujan.mp3" autoplay preload="auto" loop playsinline></audio>
+  <audio id="audio-track2" src="mehndi.mp3" preload="auto" loop playsinline></audio>
+  <audio id="audio-track3" src="haldi.mp3" preload="auto" loop playsinline></audio>
+  <audio id="audio-track4" src="sangeet.mp3" preload="auto" loop playsinline></audio>
+  <audio id="audio-track5" src="wedding-finale.mp3" preload="auto" loop playsinline></audio>
 
   <!-- ===================================================================== -->
   <!-- FLOATING TOP BAR: ACTIVE CHAPTER BADGE, MUSIC TOGGLE & SONG STUDIO    -->
@@ -317,8 +319,8 @@
     <div class="bg-[#FBF3E4] border border-[#B5853B] rounded-2xl max-w-md w-full p-5 shadow-2xl text-[#4A3516] max-h-[85vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-[#B5853B]/30 pb-3 mb-3">
         <div>
-          <h3 class="font-display text-sm font-bold text-[#9E2A2B]">Event Music &amp; Timestamp Studio</h3>
-          <p class="text-[11px] text-[#6E4D1B]">Test your 5 MP3 files &amp; check start timestamps live</p>
+          <h3 class="font-display text-sm font-bold text-[#9E2A2B]">Event Music &amp; Loop Window Studio</h3>
+          <p class="text-[11px] text-[#6E4D1B]">Test your 5 MP3 files &amp; looped segment durations live</p>
         </div>
         <button id="btn-close-song-modal" type="button" class="w-7 h-7 rounded-full bg-amber-900/10 hover:bg-amber-900/20 text-sm font-bold cursor-pointer">✕</button>
       </div>
@@ -326,7 +328,7 @@
       <div id="song-rows-container" class="space-y-2.5 text-xs"></div>
 
       <p class="text-[10.5px] text-[#6E4D1B] mt-4 bg-white/75 p-2.5 rounded-xl border border-[#B5853B]/25 leading-relaxed">
-        <strong>GitHub Root Folder Setup:</strong> Upload your 5 MP3 files directly beside <code class="bg-amber-100 px-1 rounded">index.html</code> with these exact names: <code class="bg-amber-100 px-1 rounded">welcome-mata-pujan.mp3</code>, <code class="bg-amber-100 px-1 rounded">mehndi.mp3</code>, <code class="bg-amber-100 px-1 rounded">haldi.mp3</code>, <code class="bg-amber-100 px-1 rounded">sangeet.mp3</code>, and <code class="bg-amber-100 px-1 rounded">wedding-finale.mp3</code>.
+        <strong>How Loop Duration Works:</strong> Each song starts at <code class="bg-amber-100 px-1 rounded">Start (s)</code> and automatically loops that exact <code class="bg-amber-100 px-1 rounded">Loop (s)</code> segment for as long as you stay on that page! Upload your 5 MP3 files beside <code class="bg-amber-100 px-1 rounded">index.html</code>: <code class="bg-amber-100 px-1 rounded">welcome-mata-pujan.mp3</code>, <code class="bg-amber-100 px-1 rounded">mehndi.mp3</code>, <code class="bg-amber-100 px-1 rounded">haldi.mp3</code>, <code class="bg-amber-100 px-1 rounded">sangeet.mp3</code>, and <code class="bg-amber-100 px-1 rounded">wedding-finale.mp3</code>.
       </p>
     </div>
   </div>
@@ -1155,26 +1157,12 @@
   </main>
 
   <!-- ===================================================================== -->
-  <!-- JAVASCRIPT: 5 SEPARATE MP3 TRACKS, CROSSFADE ENGINE & EFFECTS         -->
+  <!-- JAVASCRIPT: 5 SEPARATE MP3 TRACKS, ZERO-TAP AUTOPLAY & LOOP ENGINE    -->
   <!-- ===================================================================== -->
   <script>
     /**
      * =========================================================================
-     * 🎵 MASTER 5-MP3 & TIMESTAMP CONFIGURATION (ROOT-LEVEL MP3 FILES)
-     * =========================================================================
-     * Upload these 5 separate MP3 files directly in the root folder of your
-     * GitHub repository (right beside index.html):
-     *   1. welcome-mata-pujan.mp3 -> Plays continuously across Page 1 & Page 2
-     *   2. mehndi.mp3             -> Plays on Page 3 (Mehndi)
-     *   3. haldi.mp3              -> Plays on Page 4 (Haldi)
-     *   4. sangeet.mp3            -> Plays on Page 5 (Sangeet)
-     *   5. wedding-finale.mp3     -> Plays continuously across Page 6 & Page 7
-     *
-     * HOW TO CHANGE TIMESTAMPS & DURATIONS:
-     *   - `audioStartAt`: Exact second in the song where playback starts
-     *                     (e.g., set `audioStartAt: 42` to start at 0:42).
-     *   - `maxPlayDuration`: How many seconds the song plays before fading out
-     *                        (set to `0` to play continuously while on that section).
+     * 🎵 MASTER 5-MP3 & LOOPED SEGMENT CONFIGURATION (ROOT-LEVEL MP3 FILES)
      * =========================================================================
      */
     const MUSIC_TRACKS = {
@@ -1182,45 +1170,44 @@
         title: '1. Welcome & Mata Pujan (Pages 1–2)',
         elementId: 'audio-track1',
         src: 'welcome-mata-pujan.mp3',
-        audioStartAt: 16,       // <-- Start timestamp in seconds (e.g. 15)
-        maxPlayDuration: 30,   // <-- Play duration in seconds (0 = continuous)
+        audioStartAt: 16,
+        maxPlayDuration: 30,
         fadeDurationMs: 1100
       },
       track2: {
         title: '2. Mehndi — Green Gala (Page 3)',
         elementId: 'audio-track2',
         src: 'mehndi.mp3',
-        audioStartAt: 6,       // <-- Start timestamp in seconds
-        maxPlayDuration: 25,   // <-- Play duration in seconds
+        audioStartAt: 6,
+        maxPlayDuration: 25,
         fadeDurationMs: 1100
       },
       track3: {
         title: '3. Haldi — Turmeric Tales (Page 4)',
         elementId: 'audio-track3',
         src: 'haldi.mp3',
-        audioStartAt: 18,       // <-- Start timestamp in seconds
-        maxPlayDuration: 25,   // <-- Play duration in seconds
+        audioStartAt: 18,
+        maxPlayDuration: 25,
         fadeDurationMs: 1100
       },
       track4: {
         title: '4. Sangeet — Glitter & Grooves (Page 5)',
         elementId: 'audio-track4',
         src: 'sangeet.mp3',
-        audioStartAt: 2,       // <-- Start timestamp in seconds
-        maxPlayDuration: 25,   // <-- Play duration in seconds
+        audioStartAt: 2,
+        maxPlayDuration: 25,
         fadeDurationMs: 1100
       },
       track5: {
         title: '5. Wedding & Save The Date (Pages 6–7)',
         elementId: 'audio-track5',
         src: 'wedding-finale.mp3',
-        audioStartAt: 10,       // <-- Start timestamp in seconds
-        maxPlayDuration: 30,   // <-- Play duration in seconds
+        audioStartAt: 10,
+        maxPlayDuration: 30,
         fadeDurationMs: 1300
       }
     };
 
-    /* Maps all 7 scrollable pages to their top-bar label and shared MP3 track */
     const SECTION_MAP = {
       hero:        { label: 'Welcome',                     trackId: 'track1' },
       matapujan:   { label: 'Mata Pujan',                  trackId: 'track1' },
@@ -1232,15 +1219,16 @@
     };
 
     /* ======================================================================= */
-    /* HTML5 <AUDIO> CROSSFADE ENGINE FOR THE 5 SEPARATE MP3 FILES             */
+    /* HTML5 <AUDIO> SEGMENT-LOOPING & AUTOPLAY ENGINE                         */
     /* ======================================================================= */
     class RoyalAudioEngine {
       constructor() {
-        this.isEnabled = true;          // Enabled by default on page open
-        this.isActivelyPlaying = false; // Tracks actual browser audio playback
+        this.isEnabled = true;
+        this.isActivelyPlaying = false;
         this.currentSectionKey = 'hero';
         this.currentTrackId = 'track1';
-        this.durationTimer = null;
+        this.loopMonitorTimer = null;
+        this.autoplayRetryTimer = null;
         this.fadeTimers = new WeakMap();
       }
 
@@ -1256,13 +1244,10 @@
 
         if (!this.isEnabled) {
           eq.classList.add('is-paused');
-          label.textContent = 'Music';
-        } else if (this.isActivelyPlaying) {
+          label.textContent = 'Muted';
+        } else {
           eq.classList.remove('is-paused');
           label.textContent = 'Playing';
-        } else {
-          eq.classList.add('is-paused');
-          label.textContent = 'Tap Sound';
         }
       }
 
@@ -1290,10 +1275,10 @@
         this.fadeTimers.set(audioEl, timer);
       }
 
-      clearDurationTimer() {
-        if (this.durationTimer) {
-          clearTimeout(this.durationTimer);
-          this.durationTimer = null;
+      clearLoopMonitor() {
+        if (this.loopMonitorTimer) {
+          clearInterval(this.loopMonitorTimer);
+          this.loopMonitorTimer = null;
         }
       }
 
@@ -1308,18 +1293,23 @@
         });
       }
 
-      scheduleDurationStop(track, audioEl) {
-        this.clearDurationTimer();
-        if (track.maxPlayDuration && track.maxPlayDuration > 0) {
-          this.durationTimer = setTimeout(() => {
-            if (!this.isEnabled || !audioEl || audioEl.paused) return;
-            this.fadeVolume(audioEl, 0, track.fadeDurationMs, () => {
-              audioEl.pause();
-              this.isActivelyPlaying = false;
-              this.syncMusicButtonUI();
-            });
-          }, track.maxPlayDuration * 1000);
-        }
+      /* Continuously loops the exact `maxPlayDuration` window from `audioStartAt` */
+      startSegmentLoop(track, audioEl) {
+        this.clearLoopMonitor();
+        this.loopMonitorTimer = setInterval(() => {
+          if (!this.isEnabled || !audioEl || audioEl.paused) return;
+          const startAt = Math.max(0, Number(track.audioStartAt) || 0);
+          const duration = Math.max(0, Number(track.maxPlayDuration) || 0);
+
+          if (duration > 0) {
+            const loopEnd = startAt + duration;
+            if (audioEl.currentTime >= loopEnd) {
+              this.seekToStart(audioEl, startAt);
+            }
+          } else if (isFinite(audioEl.duration) && audioEl.duration > 0 && audioEl.currentTime >= audioEl.duration - 0.35) {
+            this.seekToStart(audioEl, startAt);
+          }
+        }, 200);
       }
 
       seekToStart(audioEl, startAtSeconds) {
@@ -1331,9 +1321,7 @@
             } else {
               audioEl.currentTime = targetTime;
             }
-          } catch (_) {
-            /* Ignore seek errors before metadata is loaded */
-          }
+          } catch (_) {}
         };
 
         if (audioEl.readyState >= 1) {
@@ -1341,6 +1329,57 @@
         } else {
           audioEl.addEventListener('loadedmetadata', applySeek, { once: true });
         }
+      }
+
+      /* Prime all 5 HTML5 audio decks on any scroll/touch/pointer movement */
+      primeAllDecksOnGesture() {
+        Object.keys(MUSIC_TRACKS).forEach((tId) => {
+          if (tId === this.currentTrackId) return;
+          const el = this.getAudioElement(tId);
+          if (el && el.paused) {
+            el.muted = true;
+            const p = el.play();
+            if (p && typeof p.then === 'function') {
+              p.then(() => {
+                el.pause();
+                el.muted = false;
+              }).catch(() => {
+                el.muted = false;
+              });
+            } else {
+              el.muted = false;
+            }
+          }
+        });
+      }
+
+      /* Persistent background retry loop + WebAudio context unlock until playback starts */
+      startAggressiveAutoplay() {
+        const tryPlayImmediate = async () => {
+          if (!this.isEnabled || this.isActivelyPlaying) return true;
+          try {
+            const AudioCtx = window.AudioContext || window.webkitAudioContext;
+            if (AudioCtx) {
+              const ctx = new AudioCtx();
+              if (ctx.state === 'suspended') await ctx.resume();
+            }
+          } catch (_) {}
+          return await this.playTrack(this.currentTrackId, true);
+        };
+
+        tryPlayImmediate();
+
+        if (this.autoplayRetryTimer) clearInterval(this.autoplayRetryTimer);
+        let attempts = 0;
+        this.autoplayRetryTimer = setInterval(async () => {
+          attempts++;
+          if (!this.isEnabled || this.isActivelyPlaying || attempts > 30) {
+            clearInterval(this.autoplayRetryTimer);
+            this.autoplayRetryTimer = null;
+            return;
+          }
+          await tryPlayImmediate();
+        }, 400);
       }
 
       async switchSection(sectionKey, forceRestart = false) {
@@ -1352,7 +1391,6 @@
         if (badge) badge.textContent = sectionInfo.label;
 
         const nextTrackId = sectionInfo.trackId;
-        /* Keep playing seamlessly if consecutive pages share the same MP3 track */
         if (!forceRestart && this.currentTrackId === nextTrackId && this.isEnabled && this.isActivelyPlaying) {
           return;
         }
@@ -1375,35 +1413,41 @@
           return false;
         }
 
-        this.clearDurationTimer();
+        this.clearLoopMonitor();
         this.stopAllOtherDecks(incoming, track.fadeDurationMs);
 
         try {
-          incoming.volume = 0;
+          incoming.muted = false;
+          incoming.volume = 0.9;
           this.seekToStart(incoming, track.audioStartAt);
           await incoming.play();
           this.isActivelyPlaying = true;
           this.syncMusicButtonUI();
-          this.fadeVolume(incoming, 0.9, track.fadeDurationMs);
-          this.scheduleDurationStop(track, incoming);
+          this.startSegmentLoop(track, incoming);
           return true;
         } catch (err) {
           this.isActivelyPlaying = false;
           this.syncMusicButtonUI();
-          console.info(`Autoplay awaiting first user interaction for ${track.src}:`, err.message);
           return false;
         }
       }
 
-      toggle() {
+      handleToggleButtonClick() {
+        if (this.isEnabled && !this.isActivelyPlaying) {
+          this.primeAllDecksOnGesture();
+          this.playTrack(this.currentTrackId, true);
+          return;
+        }
+
         this.isEnabled = !this.isEnabled;
 
         if (this.isEnabled) {
+          this.primeAllDecksOnGesture();
           this.playTrack(this.currentTrackId, true);
         } else {
           this.isActivelyPlaying = false;
           this.syncMusicButtonUI();
-          this.clearDurationTimer();
+          this.clearLoopMonitor();
           Object.keys(MUSIC_TRACKS).forEach((tId) => {
             const el = this.getAudioElement(tId);
             if (el) {
@@ -1441,7 +1485,7 @@
                 class="w-12 px-1.5 py-0.5 rounded border border-amber-700/30 bg-amber-50/50 text-center font-semibold" />
             </label>
             <label class="flex items-center gap-1">
-              <span>Duration (s):</span>
+              <span>Loop (s):</span>
               <input type="number" min="0" value="${track.maxPlayDuration}" data-track="${trackId}" data-field="maxPlayDuration"
                 class="w-12 px-1.5 py-0.5 rounded border border-amber-700/30 bg-amber-50/50 text-center font-semibold" />
             </label>
@@ -1472,7 +1516,7 @@
             audioEl.src = URL.createObjectURL(file);
             audioEl.load();
           }
-          if (!royalAudio.isEnabled) royalAudio.isEnabled = true;
+          royalAudio.isEnabled = true;
           royalAudio.playTrack(tId, true);
         });
       });
@@ -1509,7 +1553,7 @@
     }
 
     /* ======================================================================= */
-    /* INITIALIZE DEFAULT AUTOPLAY, SCROLL OBSERVERS & GOLD DUST PARTICLES     */
+    /* INITIALIZE ZERO-TAP AUTOPLAY, SCROLL OBSERVERS & GOLD DUST PARTICLES    */
     /* ======================================================================= */
     let appInitialized = false;
 
@@ -1517,26 +1561,28 @@
       if (appInitialized) return;
       appInitialized = true;
 
-      /* Attempt immediate autoplay on link open */
-      royalAudio.playTrack('track1', true);
+      /* Start aggressive zero-tap autoplay immediately on open */
+      royalAudio.startAggressiveAutoplay();
 
-      /* Seamless fallback if browser blocks unmuted autoplay until first gesture */
-      const unlockEvents = ['pointerdown', 'touchstart', 'click', 'keydown'];
+      /* Silent unlock on ANY interaction (scroll, swipe, touch, mousemove, click, keydown) */
+      const unlockEvents = ['scroll', 'wheel', 'touchmove', 'touchstart', 'touchend', 'pointerdown', 'mousedown', 'mousemove', 'click', 'keydown'];
       const handleFirstGesture = async (e) => {
         if (e.target && e.target.closest && e.target.closest('#btn-music-toggle')) return;
+
         if (royalAudio.isEnabled && !royalAudio.isActivelyPlaying) {
+          royalAudio.primeAllDecksOnGesture();
           const started = await royalAudio.playTrack(royalAudio.currentTrackId, true);
           if (started) {
-            unlockEvents.forEach((evt) => window.removeEventListener(evt, handleFirstGesture));
+            unlockEvents.forEach((evt) => window.removeEventListener(evt, handleFirstGesture, true));
           }
         } else if (royalAudio.isActivelyPlaying) {
-          unlockEvents.forEach((evt) => window.removeEventListener(evt, handleFirstGesture));
+          unlockEvents.forEach((evt) => window.removeEventListener(evt, handleFirstGesture, true));
         }
       };
-      unlockEvents.forEach((evt) => window.addEventListener(evt, handleFirstGesture, { passive: true }));
+      unlockEvents.forEach((evt) => window.addEventListener(evt, handleFirstGesture, { capture: true, passive: true }));
 
       const musicBtn = document.getElementById('btn-music-toggle');
-      if (musicBtn) musicBtn.addEventListener('click', () => royalAudio.toggle());
+      if (musicBtn) musicBtn.addEventListener('click', () => royalAudio.handleToggleButtonClick());
 
       const songModal = document.getElementById('song-config-modal');
       const openModalBtn = document.getElementById('btn-open-song-modal');
@@ -1556,28 +1602,35 @@
         });
       }
 
-      /* Reveal items on scroll */
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-          }
-        });
-      }, { threshold: 0.12 });
+      /* Progressive scroll reveal */
+      if ('IntersectionObserver' in window) {
+        document.documentElement.classList.add('js-ready');
+        const revealObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+            }
+          });
+        }, { threshold: 0.08 });
 
-      document.querySelectorAll('.reveal-item').forEach((el) => revealObserver.observe(el));
+        document.querySelectorAll('.reveal-item').forEach((el) => revealObserver.observe(el));
 
-      /* Switch active chapter badge & crossfade MP3 track on scroll */
-      const cardObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const key = entry.target.getAttribute('data-scene');
-            if (key) royalAudio.switchSection(key);
-          }
-        });
-      }, { threshold: 0.5 });
+        setTimeout(() => {
+          document.querySelectorAll('.reveal-item').forEach((el) => el.classList.add('is-visible'));
+        }, 1200);
 
-      document.querySelectorAll('section[data-scene]').forEach((sec) => cardObserver.observe(sec));
+        /* Switch active chapter badge & crossfade MP3 track on scroll */
+        const cardObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const key = entry.target.getAttribute('data-scene');
+              if (key) royalAudio.switchSection(key);
+            }
+          });
+        }, { threshold: 0.4 });
+
+        document.querySelectorAll('section[data-scene]').forEach((sec) => cardObserver.observe(sec));
+      }
 
       /* Ambient Floating Gold Dust Sparkles Canvas */
       const canvas = document.getElementById('gold-dust-canvas');
@@ -1621,7 +1674,11 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', initRoyalInvitation);
+    /* Fire immediately at parse time, DOMContentLoaded, and load */
+    initRoyalInvitation();
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRoyalInvitation);
+    }
     window.addEventListener('load', initRoyalInvitation);
   </script>
 </body>
